@@ -38,7 +38,7 @@ public class holdOut {
 		////DATUAK PRESTATU/FILTRATU (Hold-out aplikatu)
 		
 		// 1. RANDOMIZE
-		data.randomize(new Random(2));
+		data.randomize(new Random(1));
 		
 		// 2. SPLIT (false = 70 %; true = 30 %)
 		RemovePercentage rp = new RemovePercentage();
