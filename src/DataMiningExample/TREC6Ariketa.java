@@ -31,7 +31,7 @@ public class TREC6Ariketa {
 	public static void main(String[] args) throws Exception {
 		//CSV datuak kargatu
 		CSVLoader loader = new CSVLoader();
-		loader.setSource(new File("/home/jfu/Descargas/train.csv"));
+		loader.setSource(new File("/home/jfu/Descargas/Sample-Bulk-Recipient.csv"));
 		Instances data = loader.getDataSet();
 		
 		//ARFF fitxategi batera pasa
@@ -39,5 +39,24 @@ public class TREC6Ariketa {
 		saver.setInstances(data);
 		saver.setFile(new File("/home/jfu/Descargas/trainCSV_ARFF.arff"));
 		saver.writeBatch();
+		
+		//DATUAK KARGATU:
+    	DataSource source = new DataSource("/home/jfu/Descargas/trainCSV_ARFF.arff");
+    	Instances dataARFF = source.getDataSet();
+		if (dataARFF.classIndex() == -1)
+    		data.setClassIndex(data.numAttributes() - 1);
+    	
+    	//SAILKATZAILEA/ENTRENAMENDUA --> NaiveBayes
+    	NaiveBayes nb = new NaiveBayes();
+    	nb.buildClassifier(dataARFF);
+    	
+    	//EBALUATZAILEA --> 5-fCV
+    	Evaluation ev = new Evaluation(dataARFF);
+    	ev.crossValidateModel(nb, dataARFF, 5, new Random(1));
+    	
+    	//DATUAK ESKURATU
+    	System.out.println(ev.toSummaryString());
+    	System.out.println(ev.toClassDetailsString());
+    	System.out.println(ev.toMatrixString());
 	}
 }
