@@ -83,7 +83,7 @@ public class Labo3Garbia {
 		            iBk.setDistanceWeighting(unekoDistanceWeighting);
 		            iBk.buildClassifier(data);
 		            
-		            //EBALUAZIOA
+		            //EBALUAZIOA (5-FCV; randomSeed = 3)
 		            Evaluation ev = new Evaluation(data);
 		            ev.crossValidateModel(iBk, data, 5, new Random(3));
 		            
