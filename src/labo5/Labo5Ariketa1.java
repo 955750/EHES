@@ -19,11 +19,13 @@ import weka.filters.unsupervised.instance.RemovePercentage;
 public class Labo5Ariketa1 {
 	
 	public static void main(String[] args) throws Exception {
+		
 		////ARGUMENTUAK: 
 
-		// args[0] = "data.arff": jatorrizko datuen path (input)			 /home/jfu/Descargas/data_supervised.arff
-		// args[1] = "train.arff" datuak gordetzeko path (output)
-		// args[2] = "test_blind.arff" datuak gordetzeko path (output)
+		// args[0] = "data.arff": jatorrizko datuen path (input)		-->	/home/jfu/Escritorio/EHES/Labo5/data_supervised.arff
+		// args[1] = "train.arff" datuak gordetzeko path (output)		-->	/home/jfu/Escritorio/EHES/Labo5/ariketa1/train.arff
+		// args[2] = "test_blind.arff" datuak gordetzeko path (output)	-->	/home/jfu/Escritorio/EHES/Labo5/ariketa1/test_blind.arff
+
 
 		
 		////DATUAK KARGATU
@@ -67,7 +69,7 @@ public class Labo5Ariketa1 {
 		
 		//TEST multzoko instantzien klaseak '?' bihurtu
 		
-//ZERGATIK EZ DOA??!!??
+//		ZERGATIK EZ DOA??!!??  --> Atributu guztiekin doa klasearekin izan ezik
 //		ReplaceWithMissingValue misValFilter = new ReplaceWithMissingValue();
 //		misValFilter.setAttributeIndices(String.valueOf(data.classIndex()));
 //		misValFilter.setProbability(1);

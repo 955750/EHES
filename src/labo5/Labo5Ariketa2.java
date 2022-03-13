@@ -19,9 +19,10 @@ public class Labo5Ariketa2 {
 	public static void main(String[] args) throws Exception {
 	
 		////ARGUMENTUAK
-		//args[0] = train.arff: gainbegiratutako instantzien path (input) --> /home/lsi/Descargas/data_supervised.arff
-	    //args[1] = NB.model: eredua gordetzeko irteerako path (output) --> /home/lsi/Escritorio/NB.model
-		//args[2] = trainFSS: atributuak ezabatuta dituen instantzien multzoa --> /home/lsi/Escritorio/trainFSS.arff
+		
+		//args[0] = train.arff: gainbegiratutako instantzien path (input) 		--> /home/jfu/Escritorio/EHES/Labo5/ariketa1/train.arff
+	    //args[1] = NB.model: eredua gordetzeko irteerako path (output) 		--> /home/jfu/Escritorio/EHES/Labo5/ariketa2/NB.model
+		//args[2] = trainFSS: atributuak ezabatuta dituen instantzien multzoa 	--> /home/jfu/Escritorio/EHES/Labo5/ariketa2/trainFSS.arff
 
 		////DATUAK KARGATU
 		DataSource source = new DataSource(args[0]);

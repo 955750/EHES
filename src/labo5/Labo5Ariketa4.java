@@ -7,5 +7,6 @@ public class Labo5Ariketa4 {
 	//evaluator + search --> FSS zehazteko
 	//EN WEKA PONER "More options... --> Output Predictions
 	
+	
 
 }
