@@ -39,30 +39,37 @@ public class Labo5Ariketa1 {
 		
 		//TRAIN multzoa lortu (%70) --> ERA GAINBEGIRATUAN
 		Instances train = null;
+		Instances test = null;
 		Instances unekoFold = null;
 		StratifiedRemoveFolds srf = new StratifiedRemoveFolds();
 		srf.setNumFolds(10);
-		for(int f = 1; f <= 7; f++) { //iterazio bakoitzean datuen %10 hartu (%10 * 7 = %70) 
+		for(int f = 1; f <= 10; f++) { //iterazio bakoitzean datuen %10 hartu (%10 * 7 = %70) 
 			srf.setInputFormat(data);
 			srf.setFold(f);
 			srf.setInvertSelection(false);
 			unekoFold = Filter.useFilter(data, srf);
-			if(train == null) { //train daturik gabe dagoenean (1. iterazioan soilik)
-				train = unekoFold;
+			if(f >= 1 && f <= 7) {
+				if(train == null) { //train daturik gabe dagoenean (1. iterazioan soilik)
+					train = unekoFold;
+				}
+				else {
+					for(int i = 0; i < unekoFold.numInstances(); i++) {
+						train.add(unekoFold.get(i));
+					}
+				}	
 			}
 			else {
-				for(int i = 0; i < unekoFold.numInstances(); i++) {
-					train.add(unekoFold.get(i));
+				if(test == null) { //test daturik gabe dagoenean (1. iterazioan soilik)
+					test = unekoFold;
 				}
+				else {
+					for(int i = 0; i < unekoFold.numInstances(); i++) {
+						test.add(unekoFold.get(i));
+					}
+				}	
 			}
+			
 		}
-		
-		//TEST multzoa lortu (%30) --> ERA EZ-GAINBEGIRATUAN
-		RemovePercentage rp = new RemovePercentage();
-		rp.setInputFormat(data);
-		rp.setInvertSelection(false);
-		rp.setPercentage(70);
-		Instances test = Filter.useFilter(data, rp);
 		System.out.println(data.numInstances());
 		System.out.println(train.numInstances());
 		System.out.println(test.numInstances());
