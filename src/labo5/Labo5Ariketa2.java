@@ -34,11 +34,11 @@ public class Labo5Ariketa2 {
 		////TRAINFSS multzoak lortu
 		System.out.println("Atributu kopurua (Datuak aurreprozesatu baino lehen): " + data.numAttributes());
 		AttributeSelection attSelFilter = new AttributeSelection();
-		attSelFilter.setInputFormat(data);
 		attSelFilter.setEvaluator(new CfsSubsetEval());
 		attSelFilter.setSearch(new BestFirst());
+		attSelFilter.setInputFormat(data);
 		Instances trainFSS = Filter.useFilter(data, attSelFilter);
-		System.out.println("Atributu kopurua (Datuak aurreprozesatu baino lehen): " + trainFSS.numAttributes());
+		System.out.println("Atributu kopurua (Datuak aurreprozesatu ostean): " + trainFSS.numAttributes());
 		
 		////EREDUA SORTU
 		NaiveBayes nb = new NaiveBayes();

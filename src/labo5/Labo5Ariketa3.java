@@ -26,8 +26,9 @@ public class Labo5Ariketa3 {
 		 
 		//args[0] = NB.model: ereduaren path (input) 										--> /home/jfu/Escritorio/EHES/Labo5/ariketa2/NB.model
 		//args[1] = test_blind.arff: iragarpenan egiteko instantzien path (input) 			--> /home/jfu/Escritorio/EHES/Labo5/ariketa1/test_blind.arff
-		//args[2] = trainFSS: atributuak ezabatuta dituen instantzien multzoa 				--> /home/jfu/Escritorio/EHES/Labo5/ariketa2/trainFSS.arff
+		//args[2] = trainFSS: atributuak ezabatuta dituen instantzien multzoa (input)		--> /home/jfu/Escritorio/EHES/Labo5/ariketa2/trainFSS.arff
 		//args[3] = test_predictions.txt: iragarpena gordetzeko fitxategiko path (output) 	--> /home/jfu/Escritorio/EHES/Labo5/ariketa3/test_predictions.arff
+		//args[4] = testFSS: atributuak ezabatuta dituen instantzien multzoa (output)		--> /home/jfu/Escritorio/EHES/Labo5/ariketa3/testFSS.arff
 		
 		//TRAINFSS ETA TEST MULTZOAK KARGATU
 		DataSource sourceTrain = new DataSource(args[2]);
@@ -44,34 +45,43 @@ public class Labo5Ariketa3 {
 		Classifier cls = (Classifier) SerializationHelper.read(args[0]);
 	
 		//TEST MULTZOARI DAGOZKION ATRIBUTUAK EZABATU
+		System.out.println("Atributu kopurua (Datuak aurreprozesatu baino lehen): " + test.numAttributes());
 		Remove rmFilter = new Remove();
+		rmFilter.setInvertSelection(false); //false = hautatutako zutabeak EZABATU; true = hautatutako zutabeak MANTENDU + gainontzekoak ezabatu
 		rmFilter.setInputFormat(trainFSS);
-		rmFilter.setInvertSelection(false);
-		test = Filter.useFilter(test, rmFilter);
+		Instances testFSS = Filter.useFilter(test, rmFilter);
+		System.out.println("Atributu kopurua (Datuak aurreprozesatu baino lehen): " + testFSS.numAttributes());
+		System.out.println("Atributu kopurua (1. Instantzia): " + testFSS.firstInstance().numAttributes());
 		
-		//IRAGARPENA EGIN
-		Evaluation ev = new Evaluation(trainFSS);
-		FileWriter fw = new FileWriter(args[3]);
-		String timeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
-		fw.write(timeStamp + "\n\n");
-		if(test.equalHeaders(trainFSS)) {
-			System.out.println("TRAIN eta TEST multzoak bateragarriak dira");
-			System.out.println(trainFSS.numAttributes());
-			System.out.println(test.numAttributes());
-			int i = 1;
-			System.out.println(ev.evaluateModelOnce(cls, test.firstInstance()));
-			for(Instance instance : test) {
-				int predictionInd = (int) ev.evaluateModelOnce(cls, instance);
-				String prediction = test.classAttribute().value(predictionInd);
-				System.out.println(i + ": " + prediction);
-				fw.write(i + ": " + prediction + "\n");
-				i++;
-			}
-		}
-		else {
-			System.out.println("TRAIN eta TEST multzoak EZ dira bateragarriak");
-		}
-		fw.close();
+		//TESTFSS DATU SORTA GORDE EDUKIA IKUSTEKO
+		ArffSaver saveTestFSS = new ArffSaver();
+		saveTestFSS.setInstances(testFSS);
+		saveTestFSS.setFile(new File(args[4]));
+		saveTestFSS.writeBatch();
+		
+//		//IRAGARPENA EGIN
+//		Evaluation ev = new Evaluation(trainFSS);
+//		FileWriter fw = new FileWriter(args[3]);
+//		String timeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+//		fw.write(timeStamp + "\n\n");
+//		if(testFSS.equalHeaders(trainFSS)) {
+//			System.out.println("TRAIN eta TEST multzoak bateragarriak dira");
+//			System.out.println(trainFSS.numAttributes());
+//			System.out.println(testFSS.numAttributes());
+//			int i = 1;
+//			System.out.println(ev.evaluateModelOnce(cls, testFSS.firstInstance()));
+//			for(Instance instance : testFSS) {
+//				int predictionInd = (int) ev.evaluateModelOnce(cls, instance);
+//				String prediction = testFSS.classAttribute().value(predictionInd);
+//				System.out.println(i + ": " + prediction);
+//				fw.write(i + ": " + prediction + "\n");
+//				i++;
+//			}
+//		}
+//		else {
+//			System.out.println("TRAIN eta TEST multzoak EZ dira bateragarriak");
+//		}
+//		fw.close();
 	}
 
 }

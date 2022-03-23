@@ -95,7 +95,6 @@ public class Labo5Ariketa1 {
 		saveTrain.writeBatch();
 				
 		ArffSaver saveTestBlind = new ArffSaver();
-		//saveTestBlind.setInstances(testBlind);
 		saveTestBlind.setInstances(test);
 		saveTestBlind.setFile(new File(args[2]));
 		saveTestBlind.writeBatch();	
